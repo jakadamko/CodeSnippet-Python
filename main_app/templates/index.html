@@ -1,0 +1,56 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'style.css' %}" rel="stylesheet" media="screen">
+    <title>
+        <CodeSnippets>
+    </title>
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-static-top text-center">
+        <a href="/">
+            <img src="{% static 'images/logo.jpg' %}" alt="CodeSnippet">
+        </a>
+    </nav>
+    <main class="container" role="main">
+        <div class="snippet panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add Snippet</h3>
+            </div>
+            <div class="panel-body">
+                <form action="post_url/" method="post">
+                    {% csrf_token %}
+                    <!--token protect security-->
+                    {{ form.as_p }}
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+        </div>
+        <div class="snippet panel panel-default">
+            {% for snippet in snippets %}
+            <div class="panel-heading">
+                <h2 class="panel-title">{{ snippet.title}}</h2>
+            </div>
+            <div class="panel-body">
+                <table class="snippet-table">
+                    <tr>
+                        <pre>language: {{ snippet.language }}</pre>
+                        <pre>Description: {{ snippet.description }}</pre>
+                        <pre>image:</pre>
+                        <div class="snippet-photo">
+                            <img src="{{ snippet.img_url }}" height="200" width="695">
+                        </div>
+                    </tr>
+                </table>
+            </div>
+            <br> {% endfor %}
+        </div>
+    </main>
+</body>
+
+</html>
